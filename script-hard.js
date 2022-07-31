@@ -1,4 +1,3 @@
-
 const num = 266219;
 const arrNums = num.toString().split('');
 
