@@ -1,7 +1,8 @@
 const num = 266219;
 const arrNums = num.toString().split('');
 let lang = 'en';
-let namePerson = '';
+let namePerson = 'Артем';
+let massage;
 
 let number = 1;
 for (let i = 0; i < arrNums.length; i++) {
@@ -42,15 +43,15 @@ lang = 'ru';
 
 let indexLangs = langs.indexOf(lang);
 
-let massage =
-  namePerson == 'Артем'
+massage =
+  namePerson === 'Артем'
     ? console.log('директор')
-    : namePerson == 'Александр'
+    : namePerson === 'Александр'
     ? console.log('преподаватель')
     : console.log('');
 
 const getStringMassege = function (text) {
-  if (typeof text !== 'string' || text.trim().length == 0) {
+  if (typeof text !== 'string' || text.trim().length === 0) {
     alert('Введите строку');
   }
 
