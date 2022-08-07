@@ -1,51 +1,76 @@
 'use strict';
 
-console.log('Hello');
-
 function isNumber(num) {
   return isNaN(parseFloat(num)) && isFinite(num);
 }
 
-function guessNumber(x) {
+function getRandom(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function guessNumber(x, i) {
   function askNumber() {
-    let number = prompt('Угадай число от 1 до 100');
+    if (i === 0) {
+      let newMessage = confirm('Попытки закончились, хотите сыграть еще');
+      if (newMessage === true) {
+        guessNumber(getRandom(0, 100), 10);
+        alert('Новая игра');
+      } else {
+        alert('Игра окончена');
+      }
+    } else {
+      let number = prompt('Угадай число от 1 до 100');
 
-    console.log(number);
+      console.log(number);
 
-    if (number === null) {
-      alert('Игра окончена');
-    } else if (isNaN(+number) || number.trim()==='') {
-        alert('введи число');
-         askNumber();
-    } else if (+number > x) {
-      alert('Загаданное число меньше');
-      askNumber();
-    } else if (+number < x) {
-      alert('Загаданное число больше');
-      askNumber();
-    }  else if (+number === x) {
-      alert('Поздравляю, Вы угадали!!!');
+      if (number === null) {
+        alert('Игра окончена');
+      } else if (isNaN(+number) || number.trim() === '') {
+        alert('Введи число');
+        askNumber();
+      } else if (+number > x) {
+        i--;
+        alert(`Загаданное число меньше, осталось ${i} попыток`);
+        askNumber();
+      } else if (+number < x) {
+        i--;
+        alert(`Загаданное число больше, осталось ${i} попыток`);
+        askNumber();
+      } else if (+number === x) {
+        let message = confirm('Поздравляю, Вы угадали!!! Хотели бы сыграть еще?');
+      if (message === true) {
+        guessNumber(getRandom(0, 100), 10);
+        alert('Новая игра');
+      } else {
+        alert('Игра окончена');
+      }
+      }      
     }
-
-
-    console.log(number);
-    console.log(x);
-    console.log(+number === x);
   }
 
   askNumber();
 }
 
-guessNumber(25);
-
-// function countdown(i) {
-//     console.log(i)
-//     if (i <= 1) {  // base case
-//       return;
-//     } else {       // recursive case
-//       countdown(i - 1)
-//     }
-//   }
-//   countdown(5);
+guessNumber(getRandom(0, 100), 10);
 
 
+// Дописать функционал игрового бота.
+// Кол-во попыток пользователя должно быть ограничено: 10
+// — если пользовательское число больше, то бот выводит "Загаданное число меньше,
+// осталось попыток ..." и предлагает ввести новый вариант;+
+// — если пользовательское число меньше, то бот выводит "Загаданное число больше,
+// осталось попыток ..." и предлагает ввести новый вариант;+
+// — если пользователь вводит правильное число, то бот выводит "Поздравляю,
+// Вы угадали!!! Хотели бы сыграть еще?", при нажатии ОК игра
+// перезапускается (снова 10 попыток и новое загаданное число)
+// — если пользователь ввел не число, то выводит сообщение "Введи число!"
+// и предлагает ввести новый вариант;+
+// — если пользователь нажимает "Отмена", то игра выводит прощальное сообщение
+// и завершается.+
+// — если закончились попытки то программа
+// сообщает: "Попытки закончились, хотите сыграть еще?"
+// Программа должны быть выполнена с помощью рекурсии, без единого цикла.
+// Загаданное число и оставшиеся кол-во попыток должно храниться «в замыкании»
